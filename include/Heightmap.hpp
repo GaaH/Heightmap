@@ -34,7 +34,7 @@ public:
 
 	unsigned getHeight () const
 	{
-		return heightmap;
+		return height;
 	}
 
 	unsigned getArea () const
