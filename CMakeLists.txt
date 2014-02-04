@@ -1,5 +1,5 @@
-project(HeightMap)
 cmake_minimum_required(VERSION 2.8)
+project(Heightmap)
 
 FILE(
   GLOB_RECURSE
