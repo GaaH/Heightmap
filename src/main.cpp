@@ -1,9 +1,13 @@
 #include <iostream>
 
 #include "Heightmap.hpp"
-
 #include "AverageGenerator.hpp"
 
+#include <SFML/Graphics.hpp>
+
+#define WIDTH 640
+#define HEIGHT 480
+ 
 struct Generator
 {
 	static std::vector<unsigned char> Generate (unsigned w, unsigned h)
@@ -21,8 +25,20 @@ struct Generator
 
 int main()
 {
-	Heightmap<AverageGenerator> hm(50, 50);
+	Heightmap<AverageGenerator> hm(WIDTH, HEIGHT, "maps");
+	sf::RenderWindow app(sf::VideoMode(WIDTH, HEIGHT), "Heightmap");
 
+	sf::RectangleShape r(sf::Vector2f(WIDTH, HEIGHT));
+	sf::Texture tex;
+	tex.loadFromImage(hm.toImage());
+	r.setTexture(&tex);
+
+	while (app.isOpen())
+		{
+			app.clear();
+			app.draw(r);
+			app.display();
+		}
 
 	return 0;
 }
