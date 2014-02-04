@@ -5,8 +5,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#define WIDTH 640
-#define HEIGHT 480
+#define WIDTH 500
+#define HEIGHT 500
  
 struct Generator
 {
@@ -26,19 +26,21 @@ struct Generator
 int main()
 {
 	Heightmap<AverageGenerator> hm(WIDTH, HEIGHT, "maps");
-	sf::RenderWindow app(sf::VideoMode(WIDTH, HEIGHT), "Heightmap");
+	hm.loadImage();
+	hm.saveToDisk();
+	// sf::RenderWindow app(sf::VideoMode(WIDTH, HEIGHT), "Heightmap");
 
-	sf::RectangleShape r(sf::Vector2f(WIDTH, HEIGHT));
-	sf::Texture tex;
-	tex.loadFromImage(hm.toImage());
-	r.setTexture(&tex);
+	// sf::RectangleShape r(sf::Vector2f(WIDTH, HEIGHT));
+	// sf::Texture tex;
+	// tex.loadFromImage(hm.toImage());
+	// r.setTexture(&tex);
 
-	while (app.isOpen())
-		{
-			app.clear();
-			app.draw(r);
-			app.display();
-		}
+	// while (app.isOpen())
+	// 	{
+	// 		app.clear();
+	// 		app.draw(r);
+	// 		app.display();
+	// 	}
 
 	return 0;
 }

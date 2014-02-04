@@ -1,6 +1,7 @@
 #ifndef INCLUDED_HEIGHTMAP_H
 #define INCLUDED_HEIGHTMAP_H
 
+#include <chrono>
 #include <string>
 #include <vector>
 
@@ -10,10 +11,11 @@ template <class Generator>
 class Heightmap
 {
 public:
-	Heightmap (unsigned width, unsigned height, const std::string &save_directory) :
+	Heightmap (unsigned width, unsigned height, const std::string &save_directory = "maps", const std::string &format = ".png") :
 		width(width),
 		height(height),
 		save_directory(save_directory),
+		format((format[0] != '.') ? "." + format : format),
 		values(Generator::Generate(width, height)),
 		is_img_loaded(false)
 	{}
@@ -24,7 +26,7 @@ public:
 	const std::vector<unsigned char> getValues () const
 	{ return values; }
 
-	const sf::Image& toImage () 
+	void loadImage ()
 	{
 		if (!is_img_loaded)
 			{
@@ -38,15 +40,36 @@ public:
 								++it;
 							}
 					}
+
 				is_img_loaded = true;
+			}
+	}
+
+	const sf::Image& toImage () 
+	{
+		if (!is_img_loaded)
+			{
+				loadImage();
 			}
 
 		return img;
 	}
 
+	bool saveToDisk () const
+	{
+		if (is_img_loaded)
+			{
+				unsigned timestamps(std::chrono::system_clock::now().time_since_epoch().count());
+				img.saveToFile("maps/map_" + std::to_string(timestamps) + format);
+				return true;
+			}
+
+		return false;
+	}
+
 private:
 	unsigned width, height;
-	std::string save_directory;
+	std::string save_directory, format;
 	std::vector<unsigned char> values;
 
 	sf::Image img;
