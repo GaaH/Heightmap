@@ -14,6 +14,7 @@ public:
 	Heightmap (unsigned width, unsigned height, const std::string &save_directory = "maps", const std::string &format = ".png") :
 		width(width),
 		height(height),
+		area(width*height),
 		save_directory(save_directory),
 		format((format[0] != '.') ? "." + format : format),
 		values(Generator::Generate(width, height)),
@@ -25,6 +26,21 @@ public:
 
 	const std::vector<unsigned char> getValues () const
 	{ return values; }
+
+	unsigned getWidth () const
+	{
+		return width;
+	}
+
+	unsigned getHeight () const
+	{
+		return heightmap;
+	}
+
+	unsigned getArea () const
+	{
+		return area;
+	}
 
 	void loadImage ()
 	{
@@ -68,7 +84,7 @@ public:
 	}
 
 private:
-	unsigned width, height;
+	unsigned width, height, area;
 	std::string save_directory, format;
 	std::vector<unsigned char> values;
 
