@@ -2,6 +2,8 @@
 
 #include "Heightmap.hpp"
 
+#include "AverageGenerator.hpp"
+
 struct Generator
 {
 	static std::vector<unsigned char> Generate (unsigned w, unsigned h)
@@ -19,7 +21,7 @@ struct Generator
 
 int main()
 {
-	Heightmap<Generator> hm(50, 50);
+	Heightmap<AverageGenerator> hm(50, 50);
 
 
 	return 0;
